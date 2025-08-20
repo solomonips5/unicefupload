@@ -919,6 +919,6 @@ app.use((err, req, res, next) => {
 		.end();
 });
 
-app.listen(process.env.PORT, process.env.HOST, () => {
+app.listen(5000, "localhost", () => {
 	console.log("server running");
 });
