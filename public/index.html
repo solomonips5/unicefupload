@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>UNICEF Certificate Upload</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			body {
+				height: 100vh;
+				width: 100%;
+				display: flex;
+				flex-flow: column nowrap;
+			}
+
+			header {
+				background-color: black;
+				color: orange;
+			}
+			h1 {
+				padding: 5px;
+				text-align: center;
+			}
+
+			main {
+				width: 100%;
+				height: 100%;
+				flex-grow: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			form {
+				display: flex;
+				flex-flow: column nowrap;
+				/* align-items: center; */
+				justify-content: center;
+				gap: 10px;
+			}
+			label {
+				padding-top: 10px;
+			}
+
+			input {
+				padding: 4px;
+				padding-left: 10px;
+				font-size: 22px;
+			}
+
+			input:valid {
+				border: green 2px solid;
+			}
+			/* input:invalid {
+				border: red 2px solid;
+			} */
+
+			select {
+				padding: 4px;
+				font-size: 18px;
+			}
+
+			button {
+				padding: 10px;
+				font-size: 18px;
+				font-weight: bolder;
+				cursor: pointer;
+			}
+
+			footer {
+				background-color: black;
+				color: orange;
+			}
+
+			footer p {
+				font-size: 22px;
+				font-weight: bolder;
+				text-align: center;
+				padding: 10px;
+			}
+
+			h3 {
+				padding: 4px;
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>UNICEF Certification file upload</h1>
+		</header>
+		<a href=""></a>
+		<main>
+			<form id="form">
+				<!-- >	action="/upload"
+				enctype="application/x-www-form-urlencoded"
+				method="post" -->
+				<label for="name">Name</label>
+				<input
+					class=""
+					name="name"
+					id="name"
+					type="text"
+					maxlength="50"
+					minlength="4"
+					required
+					autocomplete="on"
+					autofocus
+					placeholder="Name"
+				/>
+				<label for="email">Email</label>
+				<input
+					class=""
+					name="email"
+					id="email"
+					type="email"
+					maxlength="50"
+					minlength="4"
+					required
+					autocomplete="on"
+					placeholder="email"
+				/>
+				<label for="phone">Phone NO</label>
+				<input
+					class=""
+					type="text"
+					name="phone"
+					id="phone"
+					maxlength="10"
+					minlength="10"
+					required
+					inputmode="numeric"
+					autocomplete="on"
+					pattern="[0-9]{10}"
+					placeholder="Phone Number"
+				/>
+				<label for="dept">Department</label>
+				<select name="dept" required>
+					<option value="tamil">Tamil</option>
+					<option value="english">English</option>
+					<option value="maths">Maths</option>
+					<option value="physics">Physics</option>
+					<option value="chemistry">Chemistry</option>
+					<option value="bcom">BCOM</option>
+					<option value="bba">BBA</option>
+					<option selected value="bca">BCA</option>
+					<option value="cs">Computer Science</option>
+				</select>
+				<label for="year">Year of study</label>
+				<select name="year" required>
+					<option selected value="1">I</option>
+					<option value="2">II</option>
+					<option value="3">III</option>
+				</select>
+				<label for="">PDF File</label>
+				<input
+					class=""
+					name="file"
+					id="file"
+					type="file"
+					required
+					accept="application/pdf"
+				/>
+				<button class="" type="submit">Upload</button>
+			</form>
+		</main>
+		<footer>
+			<p>ST Charles college of arts and science Eraiyur-607201</p>
+		</footer>
+
+		<script>
+			const form = document.getElementById("form");
+
+			form.addEventListener("submit", (event) => {
+				event.preventDefault();
+
+				if (
+					!window.confirm("All datas are correct and confirm upload")
+				) {
+					return;
+				} else {
+					const name = event.target.name.value;
+					const email = event.target.email.value;
+					const phone = event.target.phone.value;
+					const dept = event.target.dept.value;
+					const year = event.target.year.value;
+					const file = event.target.file.files[0];
+					const filename = file.name;
+
+					const fileReader = new FileReader();
+
+					fileReader.onload = () => {
+						if (fileReader.readyState === 2) {
+							fetch("/upload", {
+								body: JSON.stringify({
+									name,
+									email,
+									phone,
+									dept,
+									year,
+									file: fileReader.result,
+									filename,
+								}),
+								cache: "default",
+								credentials: "include",
+								method: "POST",
+								headers: {
+									"Content-Type": "text/plain",
+									"Content-Length": 75,
+									Accept: "*/*",
+								},
+								mode: "no-cors",
+							}).then(
+								(res) => {
+									alert("success...");
+									location.reload();
+								},
+								(error) => {
+									window.alert("Error");
+								},
+							);
+						}
+					};
+
+					fileReader.readAsDataURL(file);
+				}
+			});
+		</script>
+	</body>
+</html>

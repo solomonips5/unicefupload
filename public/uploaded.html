@@ -1,0 +1,50 @@
+const page = `
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Uploaded</title>
+		<style>
+			table {
+				border-collapse: collapse;
+				border: 1px solid black;
+			}
+			td,
+			th {
+				border: 1px solid black;
+				padding: 2px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>${dept}-${year}</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>NO</th>
+					<th>name</th>
+					<th>email</th>
+					<th>phone</th>
+					<th>dept</th>
+					<th>year</th>
+					<th>filename</th>
+				</tr>
+			</thead>
+			<tbody>
+				${users.map((user, index) => { return `
+				<tr>
+					<td>${index + 1}</td>
+					<td>${user.name}</td>
+					<td>${user.email}</td>
+					<td>${user.phone}</td>
+					<td>${user.dept}</td>
+					<td>${user.year}</td>
+					<td>${user.filename}</td>
+				</tr>
+				`; })}
+			</tbody>
+		</table>
+	</body>
+</html>
+`;

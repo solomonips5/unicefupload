@@ -1,0 +1,99 @@
+"bba1.csv",
+"bba2.csv",
+"bba3.csv",
+"bca1.csv",
+"bca2.csv",
+"bca3.csv",
+"bcom1.csv",
+"bcom2.csv",
+"bcom3.csv",
+"chemistry1.csv",
+"chemistry2.csv",
+"chemistry3.csv",
+"cs1.csv",
+"cs2.csv",
+"cs3.csv",
+"english1.csv",
+"english2.csv",
+"english3.csv",
+"maths1.csv",
+"maths2.csv",
+"maths3.csv",
+"physics1.csv",
+"physics2.csv",
+"physics3.csv",
+"tamil1.csv",
+"tamil2.csv",
+"tamil3.csv",
+
+
+
+
+
+
+			{
+				let userData = fs.readFileSync(
+					path.join(__dirname, "bca1.csv"),
+					{
+						encoding: "utf-8",
+					},
+				);
+				const rows = userData.toString().split("\n");
+				rows.pop();
+				const users = rows.map((row, i) => {
+					const values = row.split(",");
+					return {
+						name: values[0],
+						email: values[1],
+						phone: values[2],
+						dept: values[3],
+						year: values[4],
+						filename: values[5],
+					};
+				});
+				res.type("text/html");
+				const page = `
+                <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Document</title>
+            </head>
+            <body>
+                <h2>${dept}-${year}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>name</th>
+                            <th>email</th>
+                            <th>phone</th>
+                            <th>dept</th>
+                            <th>year</th>
+                            <th>filename</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${users.map((user, index) => {
+							return `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.phone}</td>
+                                <td>${user.dept}</td>
+                                <td>${user.year}</td>
+                                <td>${user.filename}</td>
+                            </tr>`;
+						})}
+        
+                    </tbody>
+                </table>
+            </body>
+        </html>
+        `;
+				res.send(page);
+
+				return;
+			}
